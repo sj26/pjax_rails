@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class DefaultLayoutControllerTest < ActionController::TestCase
-  test 'renders without layout' do
+  test 'renders without layout for pjax request' do
     request.env['HTTP_X_PJAX'] = true
 
     get :index

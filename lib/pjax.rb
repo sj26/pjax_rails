@@ -2,7 +2,6 @@ module Pjax
   extend ActiveSupport::Concern
 
   included do
-    layout proc { |c| pjax_request? ? pjax_layout : nil }
     helper_method :pjax_request?
 
     rescue_from Pjax::Unsupported, :with => :pjax_unsupported
@@ -21,6 +20,16 @@ module Pjax
 
     def pjax_layout
       false
+    end
+
+    # Add pjax layout to render options if there is no layout specified and
+    # we're inside a pjax request
+    def _normalize_options(options)
+      if !options.has_key?(:layout) && pjax_request?
+        options[:layout] = pjax_layout
+      end
+
+      super(options)
     end
 
     def pjax_container
