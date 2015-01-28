@@ -1,3 +1,3 @@
 class WithLayoutController < ApplicationController
-  layout 'with_layout'
+  layout 'custom'
 end
